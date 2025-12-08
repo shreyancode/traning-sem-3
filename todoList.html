@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-do-list</title>
+    <style>
+      .grandparent {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        flex-direction: column;
+      }
+      .container {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .parent {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        flex-direction: column;
+        height: 300px;
+        width: 300px;
+        border: 3px solid rgb(0, 0, 0);
+        border-radius: 20px;
+        gap: 20px;
+        padding: 30px;
+        overflow: auto;
+        overflow-x: hidden;
+      }
+
+      .inputs{
+            display: flex;
+        flex-direction: row;
+       align-items: center;
+       justify-content: center;
+
+        gap: 5px;
+      }
+      .inputs button{
+        height: 20px;
+        width: 60px;
+        border: none;
+        border-radius: 20px;
+        font-size: 13px;
+        text-transform: capitalize;
+        padding: 3px;
+        cursor: pointer;
+      }
+       #btn{
+        background-color: rgb(42, 205, 42);
+      }
+
+      #remove{
+        background-color: rgb(220, 77, 77);
+      }
+      .inputs input {
+        height: 20px;
+        width: 200px;
+        text-align: center;
+        border-radius: 4px;
+        font-size: 15px;
+        text-transform: capitalize;
+      }
+
+      #lists{
+        font-size: 30px;
+
+      }
+      #lists button{
+        height: 20px;
+        width: 30px;
+        border: none;
+        border-radius: 20px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+   
+    <div class="grandparent">
+        <h1>To-do-list</h1>
+        <div class="parent">
+        <div class="inputs">
+          <input type="text" placeholder="enter your task here" id="input" />
+          <button type="submit" id="btn">Add</button>
+          <button type="submit" id="remove">remove</button>
+        </div>
+        <div id="lists"></div>
+      </div>
+    </div>
+    <script>
+      const button = document.getElementById("btn");
+      button.addEventListener("click", function () {
+        //input the task and save to the local storage
+        const task = document.getElementById("input").value;
+        if(task==="") {
+            alert("tasks cannot be empty");
+            document.getElementById("input").focus();
+            return 1;
+        }
+        localStorage.setItem("items", task);
+
+        //create container for each
+        const container = document.createElement("div");
+        container.classList.add("container");
+
+        //created a p element and the task is stored inside the text content
+        const tasks = document.createElement("p");
+        tasks.textContent = localStorage.getItem("items");
+
+        //add the p element to the container
+        container.appendChild(tasks);
+
+        //for individual remove
+        const indiRemove = document.createElement("button");
+        indiRemove.innerHTML = "❌";
+        container.appendChild(indiRemove);
+
+        //for done
+        const done = document.createElement("button");
+        done.innerHTML = "✔";
+        container.appendChild(done);
+
+        //to remove if done
+        done.addEventListener("click", () => {
+          container.remove();
+        });
+
+        //to remove if we want to remove
+
+        indiRemove.addEventListener("click", () => {
+          container.remove();
+        });
+
+        //adding the container to the main lists div
+        const div = document.getElementById("lists");
+        div.appendChild(container);
+      });
+
+      //   total remove
+      const remove = document
+        .getElementById("remove")
+        .addEventListener("click", () => {
+          localStorage.clear();
+          document.getElementById("lists").innerHTML = "";
+        });
+    </script>
+  </body>
+</html>
