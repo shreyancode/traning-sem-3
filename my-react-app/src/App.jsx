@@ -1,20 +1,22 @@
-import { useState } from 'react'
-import './todo.css'
-import Inputs from './components/inputs.jsx'
-import Card from "./components/box.jsx";
-import Lists from './components/Lists.jsx'
-
-function App() {
-  
+import React from 'react'
+import {BrowserRouter,Route,Routes} from "react-router-dom"
+import About from './pages/About'
+import Contact from './pages/Contact'
+import Home from './pages/Home'
+import Layout from './Layout'
+export default function App() {
   return (
-  
-      <Card>
+    <BrowserRouter>
+    
+    <Routes>
+          <Route path="/" element={<Layout />}>
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact/>}/>
+          <Route index element={<Home />} />
+           </Route>
 
-    <Inputs>
-    </Inputs>
-    <Lists></Lists>
-    </Card>
+        
+    </Routes>
+    </BrowserRouter>
   )
 }
-
-export default App
